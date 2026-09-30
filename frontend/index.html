@@ -1,88 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Incident Response Agent</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- Background decoration -->
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
-        <!-- HEADER -->
-        <header>
-            <div class="logo">🛡️</div>
+    <div class="app-container">
 
-            <div>
-                <h1>Incident Response Agent</h1>
-                <p>AI-powered incident response with memory</p>
+        <!-- ================= HEADER ================= -->
+
+        <header class="topbar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🛡️
+                </div>
+
+                <div>
+                    <h1>Incident Response Agent</h1>
+                    <p>AI-powered incident analysis with intelligent memory</p>
+                </div>
+
             </div>
+
+            <div class="system-status">
+                <span class="status-indicator"></span>
+                <span>System Online</span>
+            </div>
+
         </header>
 
 
-        <!-- INCIDENT INPUT -->
-        <section class="input-card">
+        <!-- ================= HERO ================= -->
 
-            <h2>Describe the Incident</h2>
+        <section class="hero">
+
+            <div class="hero-badge">
+                ✦ AI INCIDENT INTELLIGENCE
+            </div>
+
+            <h2>
+                Resolve incidents
+                <span>smarter.</span>
+            </h2>
+
+            <p>
+                Analyze incidents, recall previous experiences and generate
+                actionable response recommendations using Hindsight memory.
+            </p>
+
+        </section>
+
+
+        <!-- ================= INPUT ================= -->
+
+        <section class="incident-input-card">
+
+            <div class="card-heading">
+
+                <div>
+                    <div class="heading-icon">⚡</div>
+                </div>
+
+                <div>
+                    <h3>Describe the Incident</h3>
+                    <p>Tell the agent what is happening in your system.</p>
+                </div>
+
+            </div>
+
 
             <textarea
                 id="incidentInput"
-                placeholder="Example: The server is down and users cannot login">
-            </textarea>
+                placeholder="Example: The production server is down and users cannot login..."
+            ></textarea>
 
-            <div class="button-row">
 
-                <button id="analyzeBtn" onclick="analyzeIncident()">
-                    🔍 Analyze Incident
-                </button>
+            <div class="input-footer">
 
-                <button class="clear-btn" onclick="clearResults()">
-                    Clear
-                </button>
+                <span class="input-hint">
+                    💡 Try describing a server, login, payment or network issue.
+                </span>
+
+                <div class="button-group">
+
+                    <button
+                        class="clear-button"
+                        onclick="clearResults()"
+                    >
+                        Clear
+                    </button>
+
+                    <button
+                        id="analyzeBtn"
+                        class="analyze-button"
+                        onclick="analyzeIncident()"
+                    >
+                        <span>⚡</span>
+                        Analyze Incident
+                    </button>
+
+                </div>
 
             </div>
+
 
             <div id="loading" class="loading hidden">
-                ⏳ Analyzing incident and recalling past memories...
+                <div class="loader"></div>
+                <span>
+                    Analyzing incident and recalling Hindsight memories...
+                </span>
             </div>
+
 
             <div id="error" class="error hidden"></div>
 
         </section>
 
 
-        <!-- RESULTS -->
+        <!-- ================= RESULTS ================= -->
+
         <div id="results" class="hidden">
 
 
-            <!-- INCIDENT ANALYSIS -->
-            <section class="card">
+            <!-- ANALYSIS -->
 
-                <div class="section-title">
-                    <span>📊</span>
-                    <h2>Incident Analysis</h2>
+            <section class="dashboard-card">
+
+                <div class="section-header">
+
+                    <div class="section-title">
+
+                        <div class="section-icon blue">
+                            📊
+                        </div>
+
+                        <div>
+                            <h3>Incident Analysis</h3>
+                            <p>Automated classification and severity assessment</p>
+                        </div>
+
+                    </div>
+
+                    <span class="analysis-badge">
+                        ANALYZED
+                    </span>
+
                 </div>
+
 
                 <div class="analysis-grid">
 
-                    <div class="info-box">
-                        <span>Incident Type</span>
-                        <strong id="incidentType">-</strong>
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            INCIDENT TYPE
+                        </span>
+
+                        <strong id="incidentType">
+                            -
+                        </strong>
+
                     </div>
 
-                    <div class="info-box">
-                        <span>Severity</span>
-                        <strong id="severity">-</strong>
+
+                    <div class="metric-card">
+
+                        <span class="metric-label">
+                            SEVERITY
+                        </span>
+
+                        <strong
+                            id="severity"
+                            class="severity-value"
+                        >
+                            -
+                        </strong>
+
                     </div>
 
-                    <div class="info-box">
-                        <span>Recommended Action</span>
-                        <strong id="action">-</strong>
+
+                    <div class="metric-card action-card">
+
+                        <span class="metric-label">
+                            RECOMMENDED ACTION
+                        </span>
+
+                        <strong id="action">
+                            -
+                        </strong>
+
                     </div>
 
                 </div>
@@ -90,86 +215,192 @@
             </section>
 
 
-            <!-- HINDSIGHT MEMORY -->
-            <section class="card memory-card">
 
-                <div class="section-title">
-                    <span>🧠</span>
-                    <h2>Hindsight Memory</h2>
-                </div>
+            <!-- HINDSIGHT -->
 
-                <div class="memory-status">
-                    <span class="status-dot"></span>
-                    <span>Memory: Stored + Recalled</span>
-                </div>
+            <section class="dashboard-card memory-section">
 
-                <div class="analysis-grid">
+                <div class="section-header">
 
-                    <div class="info-box">
-                        <span>Past Memories Used</span>
-                        <strong id="memoryCount">0</strong>
+                    <div class="section-title">
+
+                        <div class="section-icon purple">
+                            🧠
+                        </div>
+
+                        <div>
+                            <h3>Hindsight Memory</h3>
+                            <p>Learning from previous incidents</p>
+                        </div>
+
                     </div>
 
-                    <div class="info-box">
-                        <span>Memory Influenced Recommendation</span>
-                        <strong id="memoryInfluenced">-</strong>
+                    <div class="memory-live">
+                        <span></span>
+                        MEMORY ACTIVE
                     </div>
 
                 </div>
 
-                <h3>Relevant Past Memories</h3>
 
-                <div id="pastMemories" class="memory-list">
+                <div class="memory-stats">
+
+                    <div class="memory-stat">
+
+                        <div class="stat-icon">
+                            🗂️
+                        </div>
+
+                        <div>
+                            <span>Past Memories Used</span>
+                            <strong id="memoryCount">0</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="memory-stat">
+
+                        <div class="stat-icon">
+                            ✨
+                        </div>
+
+                        <div>
+                            <span>Memory Influenced Recommendation</span>
+                            <strong id="memoryInfluenced">-</strong>
+                        </div>
+
+                    </div>
+
                 </div>
+
+
+                <div class="memory-heading">
+                    <span>RELEVANT PAST MEMORIES</span>
+                </div>
+
+                <div id="pastMemories" class="memory-list"></div>
 
             </section>
 
 
-            <!-- ROOT CAUSE -->
-            <section class="card">
 
-                <div class="section-title">
-                    <span>🔎</span>
-                    <h2>Possible Root Cause</h2>
-                </div>
+            <!-- ROOT CAUSE + RESOLUTION -->
 
-                <p id="rootCause" class="result-text"></p>
-
-            </section>
+            <div class="two-column">
 
 
-            <!-- RESOLUTION -->
-            <section class="card">
+                <section class="dashboard-card">
 
-                <div class="section-title">
-                    <span>🛠️</span>
-                    <h2>Recommended Resolution</h2>
-                </div>
+                    <div class="section-title">
 
-                <p id="resolution" class="result-text"></p>
+                        <div class="section-icon orange">
+                            🔎
+                        </div>
 
-            </section>
+                        <div>
+                            <h3>Possible Root Cause</h3>
+                            <p>Based on incident analysis</p>
+                        </div>
+
+                    </div>
+
+                    <div class="result-box orange-box">
+
+                        <div class="result-symbol">
+                            !
+                        </div>
+
+                        <p id="rootCause"></p>
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="dashboard-card">
+
+                    <div class="section-title">
+
+                        <div class="section-icon green">
+                            🛠️
+                        </div>
+
+                        <div>
+                            <h3>Recommended Resolution</h3>
+                            <p>Memory-assisted response</p>
+                        </div>
+
+                    </div>
+
+                    <div class="result-box green-box">
+
+                        <div class="result-symbol">
+                            ✓
+                        </div>
+
+                        <p id="resolution"></p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
 
 
             <!-- RUNBOOK -->
-            <section class="card">
 
-                <div class="section-title">
-                    <span>📋</span>
-                    <h2>Incident Runbook</h2>
+            <section class="dashboard-card">
+
+                <div class="section-header">
+
+                    <div class="section-title">
+
+                        <div class="section-icon cyan">
+                            📋
+                        </div>
+
+                        <div>
+                            <h3>Incident Runbook</h3>
+                            <p>Recommended step-by-step response procedure</p>
+                        </div>
+
+                    </div>
+
+                    <span class="runbook-label">
+                        RESPONSE PLAN
+                    </span>
+
                 </div>
 
-                <ol id="runbook" class="runbook">
-                </ol>
+
+                <ol id="runbook" class="runbook"></ol>
 
             </section>
+
 
         </div>
 
 
-        <!-- FOOTER -->
+        <!-- ================= FOOTER ================= -->
+
         <footer>
-            Powered by <strong>FastAPI</strong> + <strong>Hindsight Memory</strong>
+
+            <div class="footer-line"></div>
+
+            <p>
+                Built with
+                <strong>FastAPI</strong>
+                +
+                <strong>Hindsight Memory</strong>
+            </p>
+
+            <span>
+                Incident Response Intelligence Platform
+            </span>
+
         </footer>
 
     </div>
@@ -178,5 +409,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
